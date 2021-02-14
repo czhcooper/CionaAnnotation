@@ -3,7 +3,10 @@ require(topGO)
 require(ggplot2)
 require(reshape2)
 require(tidyverse)
-require(devtools)
+
+
+#preparing data
+data("ciGO2geneID","Cigaf","ci_kegg","ciGO2geneID","ciGeneAlias2KHID")
 
 #
 GOenrich<-function(data,category,method="fisher",cutOff=0.05,padjust= TRUE,algorithm="classic") {
