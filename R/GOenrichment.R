@@ -6,9 +6,6 @@ require(tidyverse)
 require(devtools)
 
 #
-data<-as.data.frame(sample(ciGeneAlias2KHID$KHgeneID,100))
-
-
 GOenrich<-function(data,category,method="fisher",cutOff=0.05,padjust= TRUE,algorithm="classic") {
 
   genelist<-factor(as.integer(unique(names(cigeneID2GO) ) %in% data[,1]))
