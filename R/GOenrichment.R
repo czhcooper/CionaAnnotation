@@ -6,7 +6,7 @@ library(ggplot2)
 
 
 #preparing data
-data("ciGO2geneID","Cigaf","ci_kegg","ciGO2geneID","ciGeneAlias2KHID")
+data("cigeneID2GO","Cigaf","ci_kegg","ciGO2geneID","ciGeneAlias2KHID")
 
 #
 GOenrich<-function(data,category,method="fisher",cutOff=0.05,padjust= TRUE,algorithm="classic") {
