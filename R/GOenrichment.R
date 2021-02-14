@@ -1,8 +1,8 @@
 # Library required
-require(topGO)
-require(ggplot2)
-require(reshape2)
-require(tidyverse)
+library(topGO)
+library(reshape2)
+library(tidyverse)
+library(ggplot2)
 
 
 #preparing data
@@ -10,6 +10,10 @@ data("ciGO2geneID","Cigaf","ci_kegg","ciGO2geneID","ciGeneAlias2KHID")
 
 #
 GOenrich<-function(data,category,method="fisher",cutOff=0.05,padjust= TRUE,algorithm="classic") {
+
+  require(topGO)
+  require(reshape2)
+  require(tidyverse)
 
   genelist<-factor(as.integer(unique(names(cigeneID2GO) ) %in% data[,1]))
   names(genelist)<-unique(names(cigeneID2GO))
@@ -43,6 +47,7 @@ GOenrich<-function(data,category,method="fisher",cutOff=0.05,padjust= TRUE,algor
 }
 
 GOplot<- function(data,lim=20){
+  require(ggplot2)
 
   if(dim(data)[1] > lim ){
     p<-ggplot(data[1:lim,],aes(x=Significant,y=Term,fill=classic))+geom_bar(stat="identity") +
