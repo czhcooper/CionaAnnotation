@@ -1,19 +1,23 @@
-# Library required
-library(topGO)
-library(reshape2)
-library(tidyverse)
-library(ggplot2)
-
+#' GO enrichment and Similarity
+#'
+#'
+#' @param
+#' @return
+#' @examples
+#' GOenrich(geneID,category="BP")
+#' @author  Chen Zaohuang
+#' @export
 
 #preparing data
-data("cigeneID2GO","Cigaf","ci_kegg","ciGO2geneID","ciGeneAlias2KHID")
+#data("cigeneID2GO","Cigaf","ci_kegg","ciGO2geneID","ciGeneAlias2KHID")
 
 #
 GOenrich<-function(data,category,method="fisher",cutOff=0.05,padjust= TRUE,algorithm="classic") {
-
+  #Library required
   require(topGO)
   require(reshape2)
   require(tidyverse)
+  require(ggplot2)
 
 if(is.data.frame(data) ==T ){
   genelist<-factor(as.integer(unique(names(cigeneID2GO) ) %in% data[,1]))
@@ -103,7 +107,7 @@ cal_geneSim<-function(gene1,gene2,method="mean"){
   } else if ( method=="SimAvg") {
     rowMax=mean(apply(df, 1, max))
     colMax=mean(apply(df, 2, max))
-    return( 0.5 *(rowMax,colMax))
+    return( 0.5 *(rowMax+colMax))
   } else if (method=="SimMax"){
     rowMax=mean(apply(df, 1, max))
     colMax=mean(apply(df, 2, max))
