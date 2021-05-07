@@ -76,25 +76,59 @@ GOplot<- function(data,lim=20){
 
 
 library(GOSim)
-
+library(topGO)
 #calculate GO terms similarity
 
-cal_geneSim<-function(gene1,gene2,method="mean"){
+cal_geneSim<-function(gene1,gene2,simFun="CoutoResnik",method="mean",category="BP"){
+
+  if(all(c(gene1,gene2) %in% names(cigeneID2GO))){
 
 
 
   gene1.GO<-unlist(cigeneID2GO[names(cigeneID2GO) == gene1],use.names = F)
   gene2.GO<-unlist(cigeneID2GO[names(cigeneID2GO)==gene2],use.names = F)
+
+  if( category=="BP"){
+    BPterms <- ls(GOBPTerm)
+    data("ICsBPhumanall")
+  gene1.GO <- gene1.GO[gene1.GO %in% BPterms & gene1.GO %in% names(IC)]
+  gene2.GO <- gene2.GO[gene2.GO %in% BPterms & gene2.GO %in% names(IC)]
+
+
+  } else if(category=="MF"){
+    MFterms<-ls(GOMFTerm)
+    data("ICsMFhumanall")
+    gene1.GO <- gene1.GO[gene1.GO %in% MFterms & gene1.GO %in% names(IC)]
+    gene2.GO <- gene2.GO[gene2.GO %in% MFterms & gene2.GO %in% names(IC)]
+
+  } else {
+    CCterms<-ls(GOCCTerm)
+    data("ICsCChumanall")
+    gene1.GO <- gene1.GO[gene1.GO %in% CCterms & gene1.GO %in% names(IC)]
+    gene2.GO <- gene2.GO[gene2.GO %in% CCterms & gene2.GO %in% names(IC)]
+
+  }
+
+
   unique(gene1.GO)->gene1.GO
   unique(gene2.GO)->gene2.GO
+
+
+  if ( length(gene1.GO)>0 & length(gene2.GO) >0 ){
+
+  }  else { return(NA)}
+
 
   df<-matrix(ncol = length(gene2.GO),nrow = length(gene1.GO))
   colnames(df)<-gene2.GO
   rownames(df)<-gene1.GO
+
+
  for (i in 1:length(gene1.GO)){
     for(j in 1:length(gene2.GO)){
 
-    df[i,j]<-getTermSim(c(gene1.GO[i],gene2.GO[j]),method = "Lin")[upper.tri(getTermSim(c(gene1.GO[i],gene2.GO[j]),method = "relevance"))]
+      gosim<-getTermSim(c(gene1.GO[i],gene2.GO[j]),method = simFun,verbose = FALSE)
+      df[i,j]<-gosim[upper.tri(gosim)]
 
     }
   }
@@ -117,9 +151,51 @@ cal_geneSim<-function(gene1,gene2,method="mean"){
     colMax=min(apply(df, 2, max))
     return(min(rowMax,colMax))
   }
+  } else {stop("Not all genes have to GO terms")}
+}
+
+get_GO<-function(geneID,remove=T){
+
+  geneGO <-cigeneID2GO[names(cigeneID2GO) %in% geneID]
+  if(remove==T){
+    geneGO<-unlist(unlist(geneGO,use.names = F))
+    return(geneGO)
+  } else {return(geneGO)}
 
 
 }
+
+
+
+# change RBGL package's separates function
+
+separates_cooper<-function (a, b, S1, g)
+{
+  if (!is.character(a) || !is.character(b) || !is.character(S1))
+    stop("only vectors of node names allowed")
+  if (!is(g, "graph"))
+    stop("g must be a graph")
+  ng = nodes(g)
+  if (any(!(a %in% ng)) || any(!(b %in% ng)) || any(!(S1 %in%
+                                                      ng)))
+    stop("arguments must be nodes in the graph")
+  if (any(a %in% S1) || any(b %in% S1) || any(a %in% b))
+    stop("a, b and S1 must be disjoint")
+  left = ng[!(ng %in% S1)]
+  sg = subGraph(left, g)
+  ans = johnson.all.pairs.sp(sg)
+  sub1 = ans[a, b]
+  if (all(!is.finite(sub1)))
+    TRUE
+  else FALSE
+}
+
+
+
+
+
+
+
 
 
 
