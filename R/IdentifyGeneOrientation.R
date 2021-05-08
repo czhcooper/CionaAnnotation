@@ -105,29 +105,29 @@ geneOrientation<-function(data,Orientation,maxDistance=1000,minDistance=1,size=2
 
 # identify Operon
 
-ee <-unlist(lapply(ci.HT.operon4,function(x){
-  all(x[[1]] %in% unique(unlist(lapply(ci.HT.operon5,function(x)x[[1]]),use.names = F)))
+#ee <-unlist(lapply(ci.HT.operon4,function(x){
+#  all(x[[1]] %in% unique(unlist(lapply(ci.HT.operon5,function(x)x[[1]]),use.names = F)))
 
-}),use.names = F)
+#}),use.names = F)
 
-ci.HT.operon4[!ee]->ci.HT.operon4
+#ci.HT.operon4[!ee]->ci.HT.operon4
 
-ee <-unlist(lapply(ci.HT.operon3,function(x){
-  all(x[[1]] %in% c(unique(unlist(lapply(ci.HT.operon5,function(x)x[[1]]),use.names = F)),
-      unique(unlist(lapply(ci.HT.operon4,function(x)x[[1]]),use.names = F))))
+#ee <-unlist(lapply(ci.HT.operon3,function(x){
+#  all(x[[1]] %in% c(unique(unlist(lapply(ci.HT.operon5,function(x)x[[1]]),use.names = F)),
+#      unique(unlist(lapply(ci.HT.operon4,function(x)x[[1]]),use.names = F))))
 
-}),use.names = F)
+#}),use.names = F)
 
-ci.HT.operon3[!ee]->ci.HT.operon3
+#ci.HT.operon3[!ee]->ci.HT.operon3
 
-ee <-unlist(lapply(ci.HT.operon2,function(x){
-  all(x[[1]] %in% c(unique(unlist(lapply(ci.HT.operon5,function(x)x[[1]]),use.names = F)),
-                    unique(unlist(lapply(ci.HT.operon4,function(x)x[[1]]),use.names = F)),
-                    unique(unlist(lapply(ci.HT.operon3,function(x)x[[1]]),use.names = F)) ))
+#ee <-unlist(lapply(ci.HT.operon2,function(x){
+#  all(x[[1]] %in% c(unique(unlist(lapply(ci.HT.operon5,function(x)x[[1]]),use.names = F)),
+#                    unique(unlist(lapply(ci.HT.operon4,function(x)x[[1]]),use.names = F)),
+#                    unique(unlist(lapply(ci.HT.operon3,function(x)x[[1]]),use.names = F)) ))
 
-}),use.names = F)
+#}),use.names = F)
 
-ci.HT.operon2[!ee]->ci.HT.operon2
+#ci.HT.operon2[!ee]->ci.HT.operon2
 
 
 

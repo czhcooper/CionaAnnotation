@@ -1,20 +1,7 @@
 
 
 
-library(FoldGO)
-library(DESeq2)
-library(clusterProfiler)
-library(enrichplot)
-library(ggplot2)
-library(topGO)
-library(dplyr)
-library(reshape2)
-library(tidyverse)
-library(apeglm)
-library(Rmisc)
-library(topGO)
-library(qqplotr)
-library(pheatmap)
+
 #GAFReader("/Users/cooper/bio/ciona_s/genome/aniseed/Functional_Annotations/Cisavi_slimTunicate.gaf",geneid_col=6)->csgaf
  #csgaf@annotation->Csgaf
 #csGO2geneID<- getAnnotation(csgaf)
